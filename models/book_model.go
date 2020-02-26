@@ -27,7 +27,7 @@ func (bookModel BookModel)FindAll() ([]entities.Book,error){
 			if err2 != nil {
 				return nil, err2
 			} else {
-				book := entities.Book{id, bookName, author, image,quantity,price ,description}
+				book := entities.Book{id, author, bookName, image,quantity,price ,description}
 				books = append(books, book)
 			}
 		}
@@ -35,7 +35,7 @@ func (bookModel BookModel)FindAll() ([]entities.Book,error){
 	}
 }
 func (bookModel BookModel)SearchBooksByTitle(title string) ([]entities.Book,error){
-	rows,err:=bookModel.Db.Query("select  * from books where bookname REGEXP '"+title+"'")
+	rows,err:=bookModel.Db.Query("select  * from books where title REGEXP '"+title+"'")
 	if err!=nil{
 		return nil,err
 	}else {
@@ -52,7 +52,7 @@ func (bookModel BookModel)SearchBooksByTitle(title string) ([]entities.Book,erro
 			if err2 != nil {
 				return nil, err2
 			} else {
-				book := entities.Book{id, bookName, author, image,quantity,price, description}
+				book := entities.Book{id, author, bookName, image,quantity,price, description}
 				books = append(books, book)
 			}
 		}

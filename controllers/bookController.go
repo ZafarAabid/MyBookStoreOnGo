@@ -16,7 +16,6 @@ func GetAllBooks(w http.ResponseWriter,r *http.Request){
 
 	}else{
 		bookModel:=models.BookModel{Db:db}
-		fmt.Printf("\nBM%v %T\n",bookModel,bookModel)
 		books,err := bookModel.FindAll()
 		fmt.Printf("\nBooks  %v ,  %T\n",books,books)
 		if err!=nil{
@@ -39,6 +38,7 @@ func GetBooksByTitle(w http.ResponseWriter,r *http.Request){
 		if err!=nil{
 			fmt.Println(err)
 		}else{
+			fmt.Printf("\nBooks  %v ,  %T\n",books,books)
 			json.NewEncoder(w).Encode(books)
 		}
 	}
