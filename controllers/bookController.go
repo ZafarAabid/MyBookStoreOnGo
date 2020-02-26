@@ -33,7 +33,7 @@ func GetBooksByTitle(ctx *gin.Context){
 		fmt.Println(err)
 	}else{
 		bookModel:=models.BookModel{Db:db}
-		books,err:=bookModel.SearchBooksByTitle(ctx.Param("title"))
+		books,err:=bookModel.SearchBooksByTitle(ctx.Query("title"))
 		if err!=nil{
 			fmt.Println("################GBBT2")
 			fmt.Println(err)
