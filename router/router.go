@@ -1,11 +1,12 @@
 package router
+
 import (
-	"log"
-	"net/http"
+	"github.com/gin-gonic/gin"
 	"sqlDblecture/controllers"
 )
 func HandleRequest(){
-	http.HandleFunc("/getBooksByTitle",controllers.GetBooksByTitle)
-	http.HandleFunc("/getAllBooks",controllers.GetAllBooks)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	rout := gin.Default()
+	rout.GET("/getAllBooks",controllers.GetAllBooks)
+	rout.GET("/getBooksByTitle",controllers.GetBooksByTitle)
+ 	rout.Run()
 }

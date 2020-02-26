@@ -1,14 +1,13 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
-	"net/http"
+	"github.com/gin-gonic/gin"
 	"sqlDblecture/config"
 	"sqlDblecture/models"
 )
 
-func GetAllBooks(w http.ResponseWriter,r *http.Request){
+func GetAllBooks(context *gin.Context){
 	db,err:=config.GetMySQLDB()
 	if err!=nil{
 		fmt.Println("################IF1")
@@ -22,24 +21,25 @@ func GetAllBooks(w http.ResponseWriter,r *http.Request){
 			fmt.Println("################IF2")
 			fmt.Println(err)
 		}else{
-			json.NewEncoder(w).Encode(books)
+			context.JSON(200,books)
 		}
 	}
 }
 
-func GetBooksByTitle(w http.ResponseWriter,r *http.Request){
+func GetBooksByTitle(ctx *gin.Context){
 	db,err:=config.GetMySQLDB()
 	if err!=nil{
-		fmt.Println("################GBBT")
+		fmt.Println("################GBBT1")
 		fmt.Println(err)
 	}else{
 		bookModel:=models.BookModel{Db:db}
-		books,err:=bookModel.SearchBooksByTitle(r.URL.Query().Get("title"))
+		books,err:=bookModel.SearchBooksByTitle(ctx.Param("title"))
 		if err!=nil{
+			fmt.Println("################GBBT2")
 			fmt.Println(err)
 		}else{
 			fmt.Printf("\nBooks  %v ,  %T\n",books,books)
-			json.NewEncoder(w).Encode(books)
+			ctx.JSON(200,books)
 		}
 	}
 }
