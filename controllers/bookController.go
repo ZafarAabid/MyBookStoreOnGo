@@ -26,7 +26,7 @@ func GetAllBooks(context *gin.Context){
 	}
 }
 
-func GetBooksByTitle(ctx *gin.Context){
+func GetBooksByTitleByPathVar(ctx *gin.Context){
 	db,err:=config.GetMySQLDB()
 	if err!=nil{
 		fmt.Println("################GBBT1")
@@ -34,6 +34,23 @@ func GetBooksByTitle(ctx *gin.Context){
 	}else{
 		bookModel:=models.BookModel{Db:db}
 		books,err:=bookModel.SearchBooksByTitle(ctx.Query("title"))
+		if err!=nil{
+			fmt.Println("################GBBT2")
+			fmt.Println(err)
+		}else{
+			fmt.Printf("\nBooks  %v ,  %T\n",books,books)
+			ctx.JSON(200,books)
+		}
+	}
+}
+func GetBookByTitleByParam(ctx *gin.Context){
+	db,err:=config.GetMySQLDB()
+	if err!=nil{
+		fmt.Println("################GBBT1")
+		fmt.Println(err)
+	}else{
+		bookModel:=models.BookModel{Db:db}
+		books,err:=bookModel.SearchBooksByTitle(ctx.Param("title"))
 		if err!=nil{
 			fmt.Println("################GBBT2")
 			fmt.Println(err)
